@@ -28,7 +28,7 @@ body {
     background-image:linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
     font-family: system-ui, -apple-system, -apple-system-font, 'Segoe UI', 'Roboto', sans-serif;
     font-size:12px;
-    height:100vh;
+    height:100%;
     margin:0px;
     padding:0px;
     /* Padding to avoid the "unsafe" areas behind notches in the screen */

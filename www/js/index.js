@@ -28,7 +28,15 @@ var app = {
     // 'pause', 'resume', etc.
     onDeviceReady: function() {
         this.receivedEvent('deviceready');
+        window.addEventListener("batterystatus", onBatteryStatus, false);
+
+        function onBatteryStatus(status) {
+            document.getElementById("header").innerText = status.level;
+            console.log("Level: " + status.level + " isPlugged: " + status.isPlugged);
+        }
     },
+
+
 
     // Update DOM on a Received Event
     receivedEvent: function(id) {
