@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.cordova.hellocordova" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>HelloCordova</name>
+<widget id="at.msd.fh" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Egg.</name>
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
+        A minimalistic egg timer
     </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+    <author email="johannes.pertl@edu.fh-joanneum.at" href="https://github.com/JohannesPertl">
     </author>
+
     <content src="index.html" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <access origin="*" />
@@ -17,10 +17,14 @@
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
     <platform name="android">
+        <icon src="www/img/egg.png" platform="android" width="57" height="57" density="mdpi" />
         <allow-intent href="market:*" />
     </platform>
     <platform name="ios">
+        <icon src="www/img/egg.png" platform="ios" width="57" height="57" density="mdpi" />
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
     </platform>
+
+    <preference name="orientation" value="portrait" />
 </widget>

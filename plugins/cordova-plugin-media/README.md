@@ -313,7 +313,7 @@ function recordAudio() {
 Starts or resumes playing an audio file.
 
 ```js
-media.play();
+alarm.play();
 ```
 
 ### Quick Example

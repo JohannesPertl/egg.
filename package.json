@@ -1,8 +1,8 @@
 {
-  "name": "helloworld",
-  "displayName": "HelloCordova",
+  "name": "egg.",
+  "displayName": "Egg.",
   "version": "1.0.0",
-  "description": "A sample Apache Cordova application that responds to the deviceready event.",
+  "description": "A simple minimalistic egg timer.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,11 +10,13 @@
   "keywords": [
     "ecosystem:cordova"
   ],
-  "author": "Apache Cordova Team",
+  "author": "Johannes Pertl",
   "license": "Apache-2.0",
   "dependencies": {
     "cordova-android": "^8.1.0",
+    "cordova-browser": "^6.0.0",
     "cordova-plugin-battery-status": "^2.0.3",
+    "cordova-plugin-dialogs": "^2.0.2",
     "cordova-plugin-file": "^6.0.2",
     "cordova-plugin-media": "^5.0.3"
   },
@@ -25,7 +27,8 @@
       "cordova-plugin-whitelist": {}
     },
     "platforms": [
-      "android"
+      "android",
+      "browser"
     ]
   },
   "devDependencies": {
