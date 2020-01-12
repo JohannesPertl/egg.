@@ -5,7 +5,7 @@ A simple, minimalistic egg timer developed with Cordova
 ## Usage
 
 * Tap to start/stop timer
-* Double tap to reset
+* Long press to reset
 
 ## Download
 
