@@ -1,24 +1,8 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
-var app = {
+
+
+let app = {
     // Application Constructor
-    initialize: function() {
+    initialize: function () {
         document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
     },
 
@@ -26,29 +10,80 @@ var app = {
     //
     // Bind any cordova events here. Common events are:
     // 'pause', 'resume', etc.
-    onDeviceReady: function() {
-        this.receivedEvent('deviceready');
-        window.addEventListener("batterystatus", onBatteryStatus, false);
 
-        function onBatteryStatus(status) {
-            document.getElementById("header").innerText = status.level;
-            console.log("Level: " + status.level + " isPlugged: " + status.isPlugged);
+
+    onDeviceReady: function () {
+
+
+        // Constants
+        const alarmMp3Link = cordova.file.applicationDirectory + "www/sounds/alarm.mp3";
+        const alarm = new Media(alarmMp3Link, null);
+        const timerDuration = 3 * 60;
+        const timerDisplay = document.getElementById("timer");
+
+
+        let shouldStartTimer = false;
+        let currentTimerDuration = timerDuration;
+        let timer;
+        document.addEventListener('click', function () {
+            document.getElementById("home").hidden = true;
+            shouldStartTimer = shouldStartTimer === false;
+            if (shouldStartTimer) {
+                startTimer(timerDisplay);
+
+            } else {
+
+                clearInterval(timer);
+            }
+
+        }, false);
+
+
+        document.addEventListener("dblclick", function () {
+            reset();
+        }, false);
+
+
+        function reset() {
+            stopAlarm();
+            clearInterval(timer);
+            shouldStartTimer = false;
+            timerDisplay.innerHTML = "";
+            document.getElementById("home").hidden = false;
+            currentTimerDuration = timerDuration;
         }
+
+        function startTimer(display) {
+            let counter = currentTimerDuration, minutes, seconds;
+            timer = setInterval(function () {
+                currentTimerDuration = counter;
+                minutes = parseInt(counter / 60, 10);
+                seconds = parseInt(counter % 60, 10);
+
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = minutes + ":" + seconds;
+
+                if (--counter < 0) {
+                    reset();
+                    playAlarm();
+                }
+            }, 1000);
+        }
+
+        function playAlarm() {
+            alarm.setVolume(0.5);
+            alarm.play();
+        }
+
+        function stopAlarm() {
+            alarm.stop();
+        }
+
     },
 
-
-
-    // Update DOM on a Received Event
-    receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
-
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
-
-        console.log('Received Event: ' + id);
-    }
 };
 
 app.initialize();
