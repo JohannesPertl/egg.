@@ -1,6 +1,6 @@
 # Egg.
 
-A simple, minimalistic egg timer
+A simple, minimalistic egg timer developed with Cordova
 
 ## Usage
 
