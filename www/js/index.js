@@ -16,8 +16,11 @@ let app = {
 
 
         // Constants
-        const alarmMp3Link = cordova.file.applicationDirectory + "www/sounds/alarm.mp3";
-        const alarm = new Media(alarmMp3Link, null);
+        const alarmSound = new Media(cordova.file.applicationDirectory + "www/sounds/alarm.mp3");
+        const stopSound = new Media(cordova.file.applicationDirectory + "www/sounds/stop.mp3");
+        const resumeSound = new Media(cordova.file.applicationDirectory + "www/sounds/resume.mp3");
+        const resetSound = new Media(cordova.file.applicationDirectory + "www/sounds/reset.mp3");
+
         const timerDuration = 3 * 60;
         const timerDisplay = document.getElementById("timer");
 
@@ -30,22 +33,37 @@ let app = {
             shouldStartTimer = shouldStartTimer === false;
             if (shouldStartTimer) {
                 startTimer(timerDisplay);
-
             } else {
-
                 clearInterval(timer);
+                stopSound.play();
             }
 
         }, false);
 
 
-        document.addEventListener("dblclick", function () {
-            reset();
-        }, false);
+        let onLongTouch;
+        let touchTimer;
+        let touchDuration = 500;
 
+        document.addEventListener("touchstart", function () {
+            touchTimer = setTimeout(onLongTouch, touchDuration);
+        });
+
+        document.addEventListener("touchend", function (){
+
+            //stops short touches from firing the event
+            if (touchTimer)
+                clearTimeout(touchTimer);
+        });
+
+        onLongTouch = function() {
+            reset();
+        };
 
         function reset() {
-            stopAlarm();
+            alarmSound.stop();
+            resetSound.setVolume('0.5');
+            resetSound.play();
             clearInterval(timer);
             shouldStartTimer = false;
             timerDisplay.innerHTML = "";
@@ -55,6 +73,7 @@ let app = {
 
         function startTimer(display) {
             let counter = currentTimerDuration, minutes, seconds;
+            resumeSound.play();
             timer = setInterval(function () {
                 currentTimerDuration = counter;
                 minutes = parseInt(counter / 60, 10);
@@ -67,20 +86,12 @@ let app = {
                 display.textContent = minutes + ":" + seconds;
 
                 if (--counter < 0) {
+                    alarmSound.play();
                     reset();
-                    playAlarm();
                 }
             }, 1000);
         }
 
-        function playAlarm() {
-            alarm.setVolume(0.5);
-            alarm.play();
-        }
-
-        function stopAlarm() {
-            alarm.stop();
-        }
 
     },
 
