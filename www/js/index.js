@@ -23,13 +23,15 @@ let app = {
 
         const timerDuration = 3 * 60;
         const timerDisplay = document.getElementById("timer");
-
+        const homeText = document.getElementById("home");
 
         let shouldStartTimer = false;
         let currentTimerDuration = timerDuration;
         let timer;
+
+
         document.addEventListener('click', function () {
-            document.getElementById("home").hidden = true;
+            homeText.hidden = true;
             shouldStartTimer = shouldStartTimer === false;
             if (shouldStartTimer) {
                 startTimer(timerDisplay);
@@ -46,28 +48,29 @@ let app = {
         let touchDuration = 500;
 
         document.addEventListener("touchstart", function () {
-            touchTimer = setTimeout(onLongTouch, touchDuration);
+            if(homeText.hidden){
+                touchTimer = setTimeout(onLongTouch, touchDuration);
+            }
         });
 
         document.addEventListener("touchend", function (){
-
             //stops short touches from firing the event
             if (touchTimer)
                 clearTimeout(touchTimer);
         });
 
         onLongTouch = function() {
+            alarmSound.stop();
+            resetSound.setVolume('0.5');
+            resetSound.play();
             reset();
         };
 
         function reset() {
-            alarmSound.stop();
-            resetSound.setVolume('0.5');
-            resetSound.play();
             clearInterval(timer);
             shouldStartTimer = false;
             timerDisplay.innerHTML = "";
-            document.getElementById("home").hidden = false;
+            homeText.hidden = false;
             currentTimerDuration = timerDuration;
         }
 
