@@ -14,7 +14,6 @@ let app = {
 
     onDeviceReady: function () {
 
-
         // Constants
         const alarmSound = new Media(cordova.file.applicationDirectory + "www/sounds/alarm.mp3");
         const stopSound = new Media(cordova.file.applicationDirectory + "www/sounds/stop.mp3");
@@ -29,19 +28,19 @@ let app = {
         let currentTimerDuration = timerDuration;
         let timer;
 
-
         document.addEventListener('click', function () {
             homeText.hidden = true;
+
             shouldStartTimer = shouldStartTimer === false;
             if (shouldStartTimer) {
+                cordova.plugins.backgroundMode.enable();
                 startTimer(timerDisplay);
             } else {
-                clearInterval(timer);
                 stopSound.play();
+                clearInterval(timer);
             }
 
         }, false);
-
 
         let onLongTouch;
         let touchTimer;
@@ -67,6 +66,7 @@ let app = {
         };
 
         function reset() {
+            cordova.plugins.backgroundMode.disable();
             clearInterval(timer);
             shouldStartTimer = false;
             timerDisplay.innerHTML = "";
@@ -94,10 +94,7 @@ let app = {
                 }
             }, 1000);
         }
-
-
     },
-
 };
 
 app.initialize();
