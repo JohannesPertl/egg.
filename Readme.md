@@ -14,6 +14,7 @@ A simple, minimalistic egg timer developed with Cordova
 ### Plugins used
 
 * [cordova-plugin-media](https://cordova.apache.org/docs/en/latest/reference/cordova-plugin-media)
+* [cordova-plugin-background-mode-fixed](https://www.npmjs.com/package/cordova-plugin-background-mode-fixed)
 
 ### Author
 
